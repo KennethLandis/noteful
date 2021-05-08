@@ -7,6 +7,7 @@ import { findNote, findFolder, folderNotes } from './find-functions'
 import NotePageNav from './NotePageNav/NotePageNav';
 import NoteListMain from './NoteListMain/NoteListMain';
 import NotePageMain from './NotePageMain/NotePageMain';
+import NotefulContext from './NotefulContext';
 
 class App extends Component {
   state = {
@@ -15,10 +16,21 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.setState({
-      notes: Store.notes,
-      folders: Store.folders
+    Promise.all([
+      fetch(`http://localhost:9090/folders`),
+      fetch(`http://localhost:9090/notes`)
+  ])
+    .then(([Res1, Res2]) => {
+      if (!Res1.ok)
+        return Res1.json().then(e => Promise.reject(e))
+      if (!Res2.ok)
+        return Res2.json().then(e => Promise.reject(e));
+      return Promise.all([Res1.json(), Res2.json()]);
     })
+    .then(([folders1, notes1]) => this.setState({
+      folders: folders1, 
+      notes: notes1}))
+    
   };
 
   renderNavRoutes() {
@@ -91,9 +103,12 @@ class App extends Component {
 }
 
   render () {
-    
-
+    const contextValue = {
+      folders: this.state.folders,
+      notes: this.state.folders
+    }
   return (
+    <NotefulContext.Provider value={contextValue}>
     <div className="App">
       <nav className='App-nav'>{this.renderNavRoutes()}</nav>
       <header className="App-header">
@@ -101,6 +116,7 @@ class App extends Component {
       </header>
       <main className='App-main'>{this.renderMainRoutes()}</main>
     </div>
+    </NotefulContext.Provider>
   );
 }}
 
