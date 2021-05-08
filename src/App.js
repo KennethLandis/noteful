@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import {Route, Link} from 'react-router-dom';
 import './App.css';
 import NoteListNav from './NoteListNav/NoteListNav';
-import Store from './Store';
-import { findNote, findFolder, folderNotes } from './find-functions'
 import NotePageNav from './NotePageNav/NotePageNav';
 import NoteListMain from './NoteListMain/NoteListMain';
 import NotePageMain from './NotePageMain/NotePageMain';
@@ -33,10 +31,16 @@ class App extends Component {
     
   };
 
-  renderNavRoutes() {
-    const notes = this.state.notes
-    const folders = this.state.folders 
+  deleteNote = noteId => {
+    const newNotes = this.state.notes.filter(note =>
+      note.id !== noteId
+      )
+    this.setState({
+      notes: newNotes
+    })
+  }
 
+  renderNavRoutes() {
     return (
       <>
           {['/', '/folder/:folderId'].map(path => (
@@ -56,7 +60,6 @@ class App extends Component {
   }
 
   renderMainRoutes() {
-    const {notes, folders} = this.state;
     return (
         <>
             {['/', '/folder/:folderId'].map(path => (
@@ -78,7 +81,8 @@ class App extends Component {
   render () {
     const contextValue = {
       folders: this.state.folders,
-      notes: this.state.notes
+      notes: this.state.notes,
+      deleteNote: this.deleteNote
     }
   return (
     <NotefulContext.Provider value={contextValue}>

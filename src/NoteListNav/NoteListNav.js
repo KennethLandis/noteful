@@ -8,7 +8,7 @@ class NoteListNav extends Component {
     static contextType = NotefulContext;
     render() {
         const folders = this.context.folders
-        const notes = this.context.notes
+        
     return (
         <div className='NoteListNav'>
             <ul className='FolderList'>
