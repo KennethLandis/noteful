@@ -44,23 +44,12 @@ class App extends Component {
                   exact
                   key={path}
                   path={path}
-                  render={routeProps => (
-                      <NoteListNav
-                          folders={folders}
-                          notes={notes}
-                          {...routeProps}
-                      />
-                  )}
+                  component={NoteListNav}
               />
           ))}
           <Route
               path="/note/:noteId"
-              render={routeProps => {
-                  const {noteId} = routeProps.match.params;
-                  const note = findNote(notes, noteId) || {};
-                  const folder = findFolder(folders, note.folderId);
-                  return <NotePageNav {...routeProps} folder={folder} />;
-              }}
+              component={NotePageNav}
           />
         </>
     )
@@ -75,28 +64,12 @@ class App extends Component {
                     exact
                     key={path}
                     path={path}
-                    render={routeProps => {
-                        const {folderId} = routeProps.match.params;
-                        const notesForFolder = folderNotes(
-                            notes,
-                            folderId
-                        );
-                        return (
-                            <NoteListMain
-                                {...routeProps}
-                                notes={notesForFolder}
-                            />
-                        );
-                    }}
+                    component={NoteListMain}
                 />
             ))}
             <Route
                 path="/note/:noteId"
-                render={routeProps => {
-                    const {noteId} = routeProps.match.params;
-                    const note = findNote(notes, noteId);
-                    return <NotePageMain {...routeProps} note={note} />;
-                }}
+                component={NotePageMain}
             />
         </>
     );
@@ -105,7 +78,7 @@ class App extends Component {
   render () {
     const contextValue = {
       folders: this.state.folders,
-      notes: this.state.folders
+      notes: this.state.notes
     }
   return (
     <NotefulContext.Provider value={contextValue}>

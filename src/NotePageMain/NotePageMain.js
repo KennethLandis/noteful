@@ -1,27 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Note from '../Note/Note';
+import NotefulContext from '../NotefulContext';
+import { findNote } from '../find-functions';
 
-NotePageMain.defaultProps = {
-    note: {
-        content: '',
+
+
+class NotePageMain extends Component {
+    static defaultProps = {
+        match: {
+            params: {}
+        }
     }
-}
+    static contextType = NotefulContext;
 
-function NotePageMain(props) {
+    render() {
+        const notes = this.context.notes;
+        const noteId = this.props.match.params
+        const targetNote = findNote(notes, noteId.noteId)
+        console.log(notes, noteId, targetNote);
     return (
         <section className='NotePageMain'>
             <Note
-                id={props.note.id}
-                name={props.note.name}
-                modified={props.note.modified}
+                id={targetNote.id}
+                name={targetNote.name}
+                modified={targetNote.modified}
             />
             <div className='NotePageMain-Content'>
-                {props.note.content.split(/\n \r|\r/).map((para, i) =>
+                {targetNote.content.split(/\n \r|\r/).map((para, i) =>
                     <p key={i}>{para}</p>
                 )}
             </div>
         </section>
     )
-}
+}}
 
 export default NotePageMain;
