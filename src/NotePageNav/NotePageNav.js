@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 NotePageNav.defaultProps = {
     history: {
@@ -21,3 +22,10 @@ function NotePageNav(props) {
 }
 
 export default NotePageNav;
+
+NotePageNav.propTypes = {
+    folders: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string
+    }))
+}

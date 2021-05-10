@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Note from '../Note/Note';
 import NotefulContext from '../NotefulContext';
 import { folderNotes } from '../find-functions';
+import PropTypes from 'prop-types';
 
 
 class NoteListMain extends Component {
@@ -11,6 +12,7 @@ class NoteListMain extends Component {
         }
     }
     static contextType = NotefulContext;
+    
 
     render() {
         const folder = this.props.match.params
@@ -34,3 +36,15 @@ class NoteListMain extends Component {
 }}
 
 export default NoteListMain;
+
+NoteListMain.propTypes = {
+    folder: PropTypes.object,
+    notes: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        modified: PropTypes.string,
+        folderId: PropTypes.string,
+        content: PropTypes.string
+    })),
+    displayNotes: PropTypes.func
+}

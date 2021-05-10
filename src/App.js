@@ -6,6 +6,9 @@ import NotePageNav from './NotePageNav/NotePageNav';
 import NoteListMain from './NoteListMain/NoteListMain';
 import NotePageMain from './NotePageMain/NotePageMain';
 import NotefulContext from './NotefulContext';
+import AddFolder from './AddFolder/AddFolder';
+import AddNote from './AddNote/AddNote'; 
+import NotefulError from './NotefulError';
 
 class App extends Component {
   state = {
@@ -40,10 +43,27 @@ class App extends Component {
     })
   }
 
+  addFolder = newFolder => {
+    const newFolders = this.state.folders
+    newFolders.push(newFolder)
+    this.setState({
+      folders: newFolders
+    })
+  }
+
+  addNote = newNote => {
+    const newNotes = this.state.notes
+    newNotes.push(newNote)
+    this.setState({
+      notes: newNotes
+    })
+  }
+
   renderNavRoutes() {
     return (
       <>
-          {['/', '/folder/:folderId'].map(path => (
+      <NotefulError>
+          {['/', '/folder/:folderId', '/add-folder', '/add-note'].map(path => (
               <Route
                   exact
                   key={path}
@@ -55,6 +75,7 @@ class App extends Component {
               path="/note/:noteId"
               component={NotePageNav}
           />
+          </NotefulError>
         </>
     )
   }
@@ -62,6 +83,7 @@ class App extends Component {
   renderMainRoutes() {
     return (
         <>
+        <NotefulError>
             {['/', '/folder/:folderId'].map(path => (
                 <Route
                     exact
@@ -74,6 +96,9 @@ class App extends Component {
                 path="/note/:noteId"
                 component={NotePageMain}
             />
+            <Route path="/add-folder" component={AddFolder} />
+            <Route path="/add-note" component={AddNote} />
+            </NotefulError>
         </>
     );
 }
@@ -82,8 +107,11 @@ class App extends Component {
     const contextValue = {
       folders: this.state.folders,
       notes: this.state.notes,
-      deleteNote: this.deleteNote
+      deleteNote: this.deleteNote,
+      addFolder: this.addFolder,
+      addNote: this.addNote
     }
+
   return (
     <NotefulContext.Provider value={contextValue}>
     <div className="App">

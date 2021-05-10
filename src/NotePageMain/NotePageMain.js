@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Note from '../Note/Note';
 import NotefulContext from '../NotefulContext';
 import { findNote } from '../find-functions';
+import PropTypes from 'prop-types';
 
 
 
@@ -17,7 +18,7 @@ class NotePageMain extends Component {
         const notes = this.context.notes;
         const noteId = this.props.match.params
         const targetNote = findNote(notes, noteId.noteId)
-        console.log(notes, noteId, targetNote);
+        
     return (
         <section className='NotePageMain'>
             <Note
@@ -35,3 +36,14 @@ class NotePageMain extends Component {
 }}
 
 export default NotePageMain;
+
+NotePageMain.propTypes = {
+    notes: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        modified: PropTypes.string,
+        folderId: PropTypes.string,
+        content: PropTypes.string
+    })),
+    noteId: PropTypes.object,
+}

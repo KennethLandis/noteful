@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import NotefulContext from '../NotefulContext';
+import PropTypes from 'prop-types';
 
 function Note(props) {
 
@@ -48,3 +49,9 @@ function Note(props) {
 }
 
 export default Note;
+
+Note.propTypes = {
+    id: PropTypes.string,
+    modified: PropTypes.string,
+    name: PropTypes.string
+}
