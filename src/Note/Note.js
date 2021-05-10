@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NotefulContext from '../NotefulContext';
 import PropTypes from 'prop-types';
 
-function Note(props) {
+class Note extends Component {
 
-
-    function deleteNote(noteId, deleteNote) {
+    deleteNote(noteId, handleDeleteNote) {
         fetch(`http://localhost:9090/notes/${noteId}`, {
             method: `DELETE`
         })
@@ -19,26 +18,29 @@ function Note(props) {
             return response.json()
         })
         .then(data => {
-            deleteNote(noteId)
+            handleDeleteNote(noteId);
+            this.props.onDeleteNote(noteId);
         })
         .catch(error => {
             console.error(error)
         })
     }
-
+    render() {
+        const { name, id, modified } = this.props
+        const date1 = new Date(modified).toDateString();
     return (
         <NotefulContext.Consumer>
             {(context) => (
         <div className="Note">
-            <h2><Link className="Note-name" to={`/note/${props.id}`}>{props.name}</Link></h2>
+            <h2><Link className="Note-name" to={`/note/${id}`}>{name}</Link></h2>
             <div className='Note-date'>
                 <div className='Note-date-modified'>
-                    {props.modified}
+                    Last Modified: {'  '} {date1}
                 </div>
             </div>
             <button className='Note_delete' type='button'
                 onClick={() => {
-                    deleteNote(props.id, context.deleteNote)
+                    this.deleteNote(id, context.handleDeleteNote);
                 }}
             >Delete Note</button>
         </div>
@@ -46,12 +48,13 @@ function Note(props) {
         </NotefulContext.Consumer>
     
     )
-}
+}}
 
 export default Note;
 
 Note.propTypes = {
     id: PropTypes.string,
     modified: PropTypes.string,
-    name: PropTypes.string
+    name: PropTypes.string,
+    history: PropTypes.object
 }

@@ -34,7 +34,7 @@ class App extends Component {
     
   };
 
-  deleteNote = noteId => {
+  handleDeleteNote = noteId => {
     const newNotes = this.state.notes.filter(note =>
       note.id !== noteId
       )
@@ -107,7 +107,7 @@ class App extends Component {
     const contextValue = {
       folders: this.state.folders,
       notes: this.state.notes,
-      deleteNote: this.deleteNote,
+      handleDeleteNote: this.handleDeleteNote,
       addFolder: this.addFolder,
       addNote: this.addNote
     }

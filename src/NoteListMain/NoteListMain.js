@@ -12,7 +12,10 @@ class NoteListMain extends Component {
         }
     }
     static contextType = NotefulContext;
-    
+
+    handleDeleteNote = noteId => {
+        this.props.history.push('/')
+    };
 
     render() {
         const folder = this.props.match.params
@@ -27,6 +30,7 @@ class NoteListMain extends Component {
                             id={note.id}
                             name={note.name}
                             modified={note.modified}
+                            onDeleteNote={this.handleDeleteNote}
                         />
                     </li>
                 )}
@@ -46,5 +50,6 @@ NoteListMain.propTypes = {
         folderId: PropTypes.string,
         content: PropTypes.string
     })),
-    displayNotes: PropTypes.func
+    displayNotes: PropTypes.func,
+    deleteNote: PropTypes.func
 }

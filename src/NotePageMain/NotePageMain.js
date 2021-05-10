@@ -14,10 +14,14 @@ class NotePageMain extends Component {
     }
     static contextType = NotefulContext;
 
+    handleDeleteNote = noteId => {
+        this.props.history.push('/')
+    };
+
     render() {
-        const notes = this.context.notes;
-        const noteId = this.props.match.params
-        const targetNote = findNote(notes, noteId.noteId)
+        const { notes } = this.context
+        const { noteId } = this.props.match.params
+        const targetNote = findNote(notes, noteId) || { content: '' }
         
     return (
         <section className='NotePageMain'>
@@ -25,6 +29,7 @@ class NotePageMain extends Component {
                 id={targetNote.id}
                 name={targetNote.name}
                 modified={targetNote.modified}
+                onDeleteNote={this.handleDeleteNote}
             />
             <div className='NotePageMain-Content'>
                 {targetNote.content.split(/\n \r|\r/).map((para, i) =>
@@ -46,4 +51,5 @@ NotePageMain.propTypes = {
         content: PropTypes.string
     })),
     noteId: PropTypes.object,
+    onDeleteNote: PropTypes.func
 }

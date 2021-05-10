@@ -34,6 +34,7 @@ class AddNote extends Component {
         })
         .then(data => {
             addNote(data)
+            this.props.history.push(`./folder/${data.folderId}`)
         })
         .catch(error => {
             console.error(error)
