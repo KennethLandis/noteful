@@ -20,7 +20,7 @@ class NoteListMain extends Component {
     render() {
         const folder = this.props.match.params
         const notes = this.context.notes
-        let displayNotes = folderNotes(notes, folder.folderId);
+        const displayNotes = folderNotes(notes, folder.folderId);
     return (
         <section className='NoteListMain'>
             <ul>
@@ -44,7 +44,7 @@ export default NoteListMain;
 NoteListMain.propTypes = {
     folder: PropTypes.object,
     notes: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
+        id: PropTypes.number,
         name: PropTypes.string,
         modified: PropTypes.string,
         folderId: PropTypes.string,

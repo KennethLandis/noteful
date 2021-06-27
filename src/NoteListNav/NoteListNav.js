@@ -15,7 +15,7 @@ class NoteListNav extends Component {
                 {folders.map(folder =>
                     <li key={folder.id}>
                         <NavLink className='FolderLink'
-                            to={`/folder/${folder.id}`}>{folder.name}</NavLink>
+                            to={`/folder/${folder.id}`}>{folder.folder_name}</NavLink>
                     </li>
                     )}
             </ul>
@@ -29,7 +29,7 @@ export default NoteListNav;
 
 NoteListNav.propTypes = {
     folders: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
+        id: PropTypes.number,
         name: PropTypes.string
     }))
 }

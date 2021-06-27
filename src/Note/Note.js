@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 class Note extends Component {
 
     deleteNote(noteId, handleDeleteNote) {
-        fetch(`http://localhost:9090/notes/${noteId}`, {
+        fetch(`http://localhost:8000/notes/${noteId}`, {
             method: `DELETE`
         })
         .then(response => {
@@ -15,7 +15,7 @@ class Note extends Component {
                     throw error
                 })
             }
-            return response.json()
+            return response
         })
         .then(data => {
             handleDeleteNote(noteId);
@@ -53,7 +53,7 @@ class Note extends Component {
 export default Note;
 
 Note.propTypes = {
-    id: PropTypes.string,
+    id: PropTypes.number,
     modified: PropTypes.string,
     name: PropTypes.string,
     history: PropTypes.object

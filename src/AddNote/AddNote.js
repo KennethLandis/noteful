@@ -19,7 +19,7 @@ class AddNote extends Component {
     }
 
     addNote(note, addNote) {
-        fetch(`http://localhost:9090/notes`, {
+        fetch(`http://localhost:8000/notes`, {
             method: `POST`,
             headers: { 'Content-type': 'application/json'},
             body: JSON.stringify( note )
@@ -33,8 +33,9 @@ class AddNote extends Component {
             return response.json()
         })
         .then(data => {
+            console.log(data)
             addNote(data)
-            this.props.history.push(`./folder/${data.folderId}`)
+            this.props.history.push(`./folder/${data.folder_id}`)
         })
         .catch(error => {
             console.error(error)
@@ -52,9 +53,9 @@ class AddNote extends Component {
     handleSubmit(e) {
         e.preventDefault();
         const newNote = {
-            name: e.target['name'].value,
+            note_name: e.target['name'].value,
             content: e.target['content'].value,
-            folderId: e.target['folders'].value,
+            folder_id: e.target['folders'].value,
             modified: new Date()
         }
         this.addNote(newNote, this.context.addNote)
@@ -96,7 +97,7 @@ class AddNote extends Component {
                         name="folders"
                         id="folders"
                     >{folders.map(folder => (
-                        <option key={folder.id} name={folder.id} value={folder.id}>{folder.name}</option>))}
+                        <option key={folder.id} name={folder.id} value={folder.id}>{folder.folder_name}</option>))}
                     </select>
                 </div>
                 <button type="submit" disabled={this.validateContent() || this.validateName()}>Submit</button>
@@ -113,7 +114,7 @@ AddNote.propTypes = {
     touched: PropTypes.bool,
     addNote: PropTypes.func,
     folders: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
+        id: PropTypes.number,
         name: PropTypes.string
     }))
 }

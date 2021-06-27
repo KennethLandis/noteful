@@ -29,10 +29,10 @@ class AddFolder extends Component {
     }
 
     addFolder(folderName, addFolder) {
-        fetch(`http://localhost:9090/folders`, {
+        fetch(`http://localhost:8000/folders`, {
             method: `POST`,
             headers: { 'Content-type': 'application/json'},
-            body: JSON.stringify({ name: `${folderName}`})
+            body: JSON.stringify({ folder_name: `${folderName}`})
         })
         .then(response => {
             if(!response.ok) {

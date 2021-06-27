@@ -44,7 +44,7 @@ export default NotePageMain;
 
 NotePageMain.propTypes = {
     notes: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
+        id: PropTypes.number,
         name: PropTypes.string,
         modified: PropTypes.string,
         folderId: PropTypes.string,
