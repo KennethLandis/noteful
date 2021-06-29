@@ -19,7 +19,8 @@ class AddNote extends Component {
     }
 
     addNote(note, addNote) {
-        fetch(`http://localhost:8000/notes`, {
+        const api_url = process.env.REACT_APP_API_URL
+        fetch(`${api_url}/notes`, {
             method: `POST`,
             headers: { 'Content-type': 'application/json'},
             body: JSON.stringify( note )

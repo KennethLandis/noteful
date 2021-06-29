@@ -29,7 +29,8 @@ class AddFolder extends Component {
     }
 
     addFolder(folderName, addFolder) {
-        fetch(`http://localhost:8000/folders`, {
+        const api_url = process.env.REACT_APP_API_URL
+        fetch(`${api_url}/folders`, {
             method: `POST`,
             headers: { 'Content-type': 'application/json'},
             body: JSON.stringify({ folder_name: `${folderName}`})

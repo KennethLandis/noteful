@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 class Note extends Component {
 
     deleteNote(noteId, handleDeleteNote) {
-        fetch(`http://localhost:8000/notes/${noteId}`, {
+        const api_url = process.env.REACT_APP_API_URL
+        fetch(`${api_url}/notes/${noteId}`, {
             method: `DELETE`
         })
         .then(response => {

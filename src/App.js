@@ -17,9 +17,10 @@ class App extends Component {
   };
 
   componentDidMount() {
+    const api_url = process.env.REACT_APP_API_URL
     Promise.all([
-      fetch(`http://localhost:8000/folders`),
-      fetch(`http://localhost:8000/notes`)
+      fetch(`${api_url}/folders`),
+      fetch(`${api_url}/notes`)
   ])
     .then(([Res1, Res2]) => {
       if (!Res1.ok)
